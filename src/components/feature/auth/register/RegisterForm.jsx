@@ -2,7 +2,7 @@ import { Input, Checkbox, Button, Typography } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import { IoEyeOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
-import { RegisterSchema } from "../validation/schemas";
+import { RegisterSchema } from "../../validations/RegisterSchema";
 
 const initialValues = {
   fullname: "",

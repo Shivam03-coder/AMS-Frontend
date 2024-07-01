@@ -6,7 +6,7 @@ import BlobSvg from "../../components/shared/svgs/BlobSvg";
 import SnowSvg from "../../components/shared/svgs/SnowSvg";
 
 const Authpage = () => {
-  const auth = false;
+  const isauth = true;
   return (
     <div className="Doublecol  min-h-screen">
       <section className="bg-secondary-main overflow-hidden size-full relative">
@@ -15,8 +15,17 @@ const Authpage = () => {
       </section>
       <section className="relative place-self-stretch Col-center overflow-hidden">
         <SnowSvg />
-        <Title />
-        {auth ? <Login /> : <Register />}
+        {isauth ? (
+          <>
+            <Title msg={"LOGIN"} />
+            <Login />
+          </>
+        ) : (
+          <>
+            <Title msg={"REGISTER"} />
+            <Register />
+          </>
+        )}
       </section>
     </div>
   );

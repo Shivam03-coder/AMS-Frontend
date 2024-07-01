@@ -7,7 +7,7 @@ function Appinfo() {
       {APPINFODATA.map((info, index) => {
         const Iconcomponets = info.icons;
         return (
-          <div key={info.id} className="text-primary Row-center py-7 z-50 gap-5">
+          <div key={info.id} className="text-primary Row-center py-4 md:py-7 z-50 gap-5">
             <Typography as={"div"}>
               <Iconcomponets
                 className="bg-tertiary-main size-[80px] md:size-[100px] rounded-xl p-5  "

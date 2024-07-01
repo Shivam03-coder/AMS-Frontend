@@ -6,7 +6,7 @@ module.exports = withMT({
     colors: {
       primary: "#ffffff",
       "secondary-prime": "#0C1844",
-      "secondary-main": "#006989",                          
+      "secondary-main": "#006989",
       "tertiary-prime": "#C2D9FF",
       "tertiary-main": "#FF7D29",
       glassy: "rgba(255, 255, 255, 0.3);",
