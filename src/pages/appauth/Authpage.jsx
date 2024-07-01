@@ -6,7 +6,7 @@ import BlobSvg from "../../components/shared/svgs/BlobSvg";
 import SnowSvg from "../../components/shared/svgs/SnowSvg";
 
 const Authpage = () => {
-  const auth = true;
+  const auth = false;
   return (
     <div className="Doublecol  min-h-screen">
       <section className="bg-secondary-main overflow-hidden size-full relative">
