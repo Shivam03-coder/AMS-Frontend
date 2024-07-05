@@ -1,7 +1,6 @@
 import { Input, Checkbox, Button, Typography } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import { IoEyeOutline } from "react-icons/io5";
-import { toast } from "react-toastify";
 import { RegisterSchema } from "../../validations/RegisterSchema";
 
 const initialValues = {
@@ -12,6 +11,8 @@ const initialValues = {
 };
 
 const RegisterForm = () => {
+   
+
   const { values, errors, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema: RegisterSchema,
@@ -86,24 +87,6 @@ const RegisterForm = () => {
           </p>
         </div>
       </div>
-      <Checkbox
-        label={
-          <Typography
-            variant="small"
-            color="gray"
-            className="flex items-center font-normal"
-          >
-            I agree the
-            <a
-              href="#"
-              className="font-medium transition-colors hover:text-gray-900"
-            >
-              &nbsp;Terms and Conditions
-            </a>
-          </Typography>
-        }
-        containerProps={{ className: "-ml-2.5" }}
-      />
       <Button
         type="submit"
         className="mt-6 bg-secondary-prime text-xl"

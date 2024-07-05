@@ -6,7 +6,12 @@ import Loading from "../components/shared/loading/Apploading";
 import ProtectedRoutes from "./ProtectedRoutes";
 import { toastConfig } from "../components/config/Toastifyconfig";
 import {
-  Homepage, Authpage, Userdashboard, Admindashboard, Errorpage
+  Homepage,
+  Authpage,
+  Userdashboard,
+  Admindashboard,
+  Passwordresetpage,
+  Errorpage,
 } from "../pages/pagesexport";
 
 function Approutes() {
@@ -16,6 +21,7 @@ function Approutes() {
       <Routes>
         <Route path="/" Component={Homepage} />
         <Route path="/ams/register" Component={Authpage} />
+        <Route path="/ams/password-reset" Component={Passwordresetpage} />
         <Route
           path="/ams/student-dashboard/:id"
           element={

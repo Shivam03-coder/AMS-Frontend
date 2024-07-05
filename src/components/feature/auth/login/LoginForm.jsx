@@ -3,7 +3,8 @@ import { useFormik } from "formik";
 import { IoEyeOutline } from "react-icons/io5";
 import { LoginSchema } from "../../validations/LoginSchema.js";
 import { useState } from "react";
-import Emailverification from "../emailverification/Emailverification";
+import Emailverificationmodal from "../emailverification/Emailverificationmodal";
+import { useNavigate } from "react-router-dom";
 
 const initialValues = {
   email: "",
@@ -13,6 +14,7 @@ const initialValues = {
 
 function LoginForm() {
   const [open, setOpen] = useState(false);
+  const Navigate = useNavigate();
 
   const handleOpen = () => setOpen(!open);
 
@@ -63,6 +65,7 @@ function LoginForm() {
       <Typography
         as={"button"}
         variant="paragraph"
+        onClick={() => Navigate("/ams/password-reset")}
         className="text-secondary-main hover:underline text-[15px] font-normal mx-2"
       >
         forgotten password ?
@@ -97,7 +100,7 @@ function LoginForm() {
       >
         Login
       </Button>
-      {<Emailverification setOpen={setOpen} open={open} />}
+      {<Emailverificationmodal setOpen={setOpen} open={open} />}
     </form>
   );
 }
