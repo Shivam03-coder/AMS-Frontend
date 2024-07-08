@@ -1,10 +1,18 @@
-import { Input, Checkbox, Button, Typography } from "@material-tailwind/react";
+import {
+  Input,
+  Checkbox,
+  Button,
+  Typography,
+  Spinner,
+} from "@material-tailwind/react";
 import { useFormik } from "formik";
 import { IoEyeOutline } from "react-icons/io5";
 import { LoginSchema } from "../../validations/LoginSchema.js";
-import { useState } from "react";
-import Emailverificationmodal from "../emailverification/Emailverificationmodal";
 import { useNavigate } from "react-router-dom";
+import { useLoginUserMutation } from "../../../../app/api/userapi.js";
+import { toast } from "react-toastify";
+import Cookie from "js-cookie";
+import { useSelector } from "react-redux";
 
 const initialValues = {
   email: "",
@@ -13,16 +21,40 @@ const initialValues = {
 };
 
 function LoginForm() {
-  const [open, setOpen] = useState(false);
+  const [LoginUser, { isLoading }] = useLoginUserMutation();
+
   const Navigate = useNavigate();
 
-  const handleOpen = () => setOpen(!open);
+  const { _id } = useSelector(({ user }) => user.registerd_User_info);
 
   const { values, errors, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema: LoginSchema,
-    onSubmit: async (values) => {
-      console.log(values);
+    onSubmit: async (userlogincred, action) => {
+      try {
+        if (userlogincred.check !== true) {
+          return toast.error("Please accept terms and conditions");
+        }
+
+        const resp = await LoginUser(userlogincred);
+
+        if (resp.data && resp.data.status === "success") {
+          toast.success(resp.data.message);
+          action.resetForm();
+
+          const isAuthenticated = Cookie.get("isUserAuthentucated");
+
+          if (isAuthenticated) {
+            Navigate(`/ams/student-dashboard/:${_id}`);
+          }
+        }
+
+        if (resp.error.data && resp.error.data.status === "failed") {
+          toast.error(resp.error.data.message);
+        }
+      } catch (error) {
+        console.log("ERROR", error);
+      }
     },
   });
 
@@ -94,13 +126,18 @@ function LoginForm() {
       />
       <Button
         type="submit"
-        onClick={handleOpen}
         className="mt-6 bg-secondary-prime text-xl"
         fullWidth
       >
-        Login
+        {isLoading ? (
+          <Spinner
+            className="size-8 mx-auto bg-transparent"
+            color="deep-orange"
+          />
+        ) : (
+          "LOGIN"
+        )}
       </Button>
-      {<Emailverificationmodal setOpen={setOpen} open={open} />}
     </form>
   );
 }

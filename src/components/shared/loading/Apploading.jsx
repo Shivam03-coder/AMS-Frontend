@@ -12,7 +12,6 @@ const Apploading = () => {
         innerCircleColor="#006989"
         barColor="#0C1844"
         ariaLabel="circles-with-bar-Apploading"
-        wrapperStyle={{}}
         wrapperclassName=""
         visible={true}
       />

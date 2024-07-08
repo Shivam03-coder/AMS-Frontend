@@ -1,8 +1,11 @@
-import { Input, Checkbox, Button, Typography } from "@material-tailwind/react";
+import { Input, Button, Typography, Spinner } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import { IoEyeOutline } from "react-icons/io5";
 import { RegisterSchema } from "../../validations/RegisterSchema";
-
+import { useRegisterUserMutation } from "../../../../app/api/userapi";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setUsercredentials } from "../../../../app/slices/userslice";
 const initialValues = {
   fullname: "",
   phonenumber: "",
@@ -11,13 +14,28 @@ const initialValues = {
 };
 
 const RegisterForm = () => {
-   
+  const [RegisterUser, { isLoading }] = useRegisterUserMutation();
+
+  const dispatch = useDispatch();
 
   const { values, errors, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema: RegisterSchema,
-    onSubmit: async (value) => {
-      console.log(value);
+    onSubmit: async (userinfo, action) => {
+      try {
+        const resp = await RegisterUser(userinfo);
+
+        if (resp.data && resp.data?.status === "success") {
+          toast.success(resp.data.message);
+          dispatch(setUsercredentials(resp.data.user));
+          action.resetForm();
+        }
+        if (resp.error && resp.error.data?.status === "failed") {
+          toast.error(resp.error.data.message);
+        }
+      } catch (error) {
+        console.log("error:", error);
+      }
     },
   });
 
@@ -89,12 +107,19 @@ const RegisterForm = () => {
       </div>
       <Button
         type="submit"
-        className="mt-6 bg-secondary-prime text-xl"
+        className="mt-6 bg-secondary-prime Row-center text-xl"
         fullWidth
       >
-        REGISTER
+        {isLoading ? (
+          <Spinner
+            className="size-8 mx-auto bg-transparent"
+            color="deep-orange"
+          />
+        ) : (
+          "REGISTER"
+        )}
       </Button>
-      <Typography color="gray" className="mt-4 text-center font-normal">
+      <Typography color="gray" className="mt-4  font-normal">
         Already have an account?{" "}
         <a href="#" className="font-medium text-gray-900">
           Log In

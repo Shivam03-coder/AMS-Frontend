@@ -4,9 +4,12 @@ import Appinfo from "./subcomponents/appinfo/Appinfo";
 import Title from "./subcomponents/Title";
 import BlobSvg from "../../components/shared/svgs/BlobSvg";
 import SnowSvg from "../../components/shared/svgs/SnowSvg";
+import { useSelector } from "react-redux";
 
 const Authpage = () => {
-  const isauth = false;
+  const isuserRegisterd = useSelector(({ user }) => user.registerd_User_info);
+
+
   return (
     <div className="Doublecol  min-h-screen">
       <section className="bg-secondary-main overflow-hidden size-full relative">
@@ -15,7 +18,7 @@ const Authpage = () => {
       </section>
       <section className="relative place-self-stretch Col-center overflow-hidden">
         <SnowSvg />
-        {isauth ? (
+        {isuserRegisterd ? (
           <>
             <Title msg={"LOGIN"} />
             <Login />

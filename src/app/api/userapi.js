@@ -7,10 +7,23 @@ const userQuery = Apiservices.injectEndpoints({
         url: "/register",
         method: "POST",
         body: userinfo,
-        headers: {},
+        headers: {
+          "content-type": "application/json",
+        },
+      }),
+    }),
+    loginUser: build.mutation({
+      query: (userlogininfo) => ({
+        url: "/user-login",
+        method: "POST",
+        body: userlogininfo,
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
       }),
     }),
   }),
 });
 
-const { useRegisterUserMutation } = userQuery;
+export const { useRegisterUserMutation , useLoginUserMutation} = userQuery;

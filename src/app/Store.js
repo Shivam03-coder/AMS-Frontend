@@ -2,11 +2,23 @@ import { configureStore } from "@reduxjs/toolkit";
 import { rootReducers } from "./combinedreducers";
 import { Apiservices } from "./middlewares/apiservices";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import { persistConfig } from "./persist/persistconfig";
+import { persistReducer, persistStore } from "redux-persist";
 
-export const Store = configureStore({
-  reducer: rootReducers,
+// REDUX PERSISIST CONFIGURATION
+const persistedReducer = persistReducer(persistConfig, rootReducers);
+
+const Store = configureStore({
+  reducer: persistedReducer,
+
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(Apiservices.middleware),
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(Apiservices.middleware),
 });
 
 setupListeners(Store.dispatch);
+
+const persistor = persistStore(Store);
+
+export { Store, persistor };

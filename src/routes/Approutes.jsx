@@ -1,8 +1,7 @@
 import React, { Suspense } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { Routes, Route } from "react-router-dom";
-import Loading from "../components/shared/loading/Apploading";
+import { Routes, Route } from "react-router-dom"
 import ProtectedRoutes from "./ProtectedRoutes";
 import { toastConfig } from "../components/config/Toastifyconfig";
 import {
@@ -16,7 +15,7 @@ import {
 
 function Approutes() {
   return (
-    <Suspense fallback={<Loading />}>
+    <>
       <ToastContainer {...toastConfig} />
       <Routes>
         <Route path="/" Component={Homepage} />
@@ -33,7 +32,7 @@ function Approutes() {
         <Route path="/ams/admin-dashboard/:id" Component={Admindashboard} />
         <Route path="*" Component={Errorpage} />
       </Routes>
-    </Suspense>
+    </>
   );
 }
 
